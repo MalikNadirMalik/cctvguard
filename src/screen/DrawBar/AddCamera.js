@@ -33,7 +33,7 @@ const AddCamera = ({ navigation }) => {
   const [source, setSource] = useState();
   const [location, setLocation] = useState();
   const [status, setStatus] = useState('idle');
-  const [videoURLmp4, setVideoURLmp4] = useState();
+  const [videoURLmp4, setVideoURLmp4] = useState('idle');
   const [camId, setCamId] = useState();
   const authContext = useContext(AuthContext);
   const { publicAxios } = useContext(AxiosContext);
@@ -71,17 +71,17 @@ const AddCamera = ({ navigation }) => {
       setStatus('error');
       console.log('error........', error);
     }
-    if (status === 'loading') {
-      return <Spinner />;
-    }
+
     setStatus('success');
 
+    // console.log('camId....', camId);
 
+    // console.log('videoURLmp4....', videoURLmp4);
   };
-  console.log('camId....', camId);
 
-  console.log('videoURLmp4....', videoURLmp4);
-
+  if (status === 'loading') {
+    return <Spinner />;
+  }
 
   return (
     <SafeAreaView >

@@ -38,9 +38,8 @@ const AddCameraActivityFeature = ({ navigation }) => {
   const [status, setStatus] = useState('idle');
 
   useEffect(() => {
-    // if (navigation.isReady()) {
+
     ApiFeature();
-    // }
   }, []);
 
   // async function ApiFeature() {
@@ -54,7 +53,7 @@ const AddCameraActivityFeature = ({ navigation }) => {
       setActivites(response.data);
 
 
-      setStatus('success');
+      // setStatus('success');
 
     } catch (error) {
       console.log('error', error);
@@ -76,9 +75,9 @@ const AddCameraActivityFeature = ({ navigation }) => {
 
   }
 
-  if (status === 'loading') {
-    return <Spinner />;
-  }
+  // if (status === 'loading') {
+  //   return <Spinner />;
+  // }
 
   function setSelection(e, item, index) {
     let values = [...activites];

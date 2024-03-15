@@ -89,12 +89,20 @@ android {
 //     keyAlias System.console().readLine("\nAlias: ")
 //     keyPassword System.console().readLine("\nAlias password: ")
 //    }
-      release {                
-          file('your_key_name.keystore')     
-          storePassword 'your_key_store_password'
-          keyAlias 'your_key_alias'
-          keyPassword 'your_key_file_alias_password'
-     }
+ release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
+    //   release {                
+    //       file('your_key_name.keystore')     
+    //       storePassword 'your_key_store_password'
+    //       keyAlias 'your_key_alias'
+    //       keyPassword 'your_key_file_alias_password'
+    //  }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'

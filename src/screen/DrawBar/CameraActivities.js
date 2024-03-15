@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -37,6 +37,11 @@ const CameraActivities = ({ navigation }) => {
     getCameras();
 
   }, []);
+  // useEffect(
+  //   useCallback(() => {
+  //     getCameras();
+  //   }, []),
+  // );
 
   async function getCameras() {
     setStatus('loading');

@@ -73,7 +73,6 @@ const Camera = ({ navigation }) => {
       setCameraData(cameras);
       var list1 = cameras;
       console.log('...............', list1);
-      // await AsyncStorage.setItem('cameraData', cameraData);
       setStatus('success')
     }
 
@@ -91,7 +90,6 @@ const Camera = ({ navigation }) => {
     setCamId(item.camId);
     await AsyncStorage.setItem('CamId', item.camId);
     navigation.navigate('CameraActivities');
-    // navigation.replsace('CameraActivities');
   }
   console.log('....camid....', camId);
   console.log("cameraData..........", cameraData);
