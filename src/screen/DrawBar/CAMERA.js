@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import SafeAreaView from 'react-native-safe-area-view';
 import Video from 'react-native-video';
 import axios from 'axios';
@@ -20,12 +21,6 @@ import { AuthContext } from '../../context/AuthContext';
 import { AxiosContext } from '../../context/AxiosContext';
 import Spinner from '../../components/Spinner';
 // import CameraActivities from '../../screen/DrawBar/CameraActivities';
-
-
-
-
-
-
 const Camera = ({ navigation }) => {
 
   const axiosContext = useContext(AxiosContext);
@@ -33,6 +28,7 @@ const Camera = ({ navigation }) => {
   const [cameraData, setCameraData] = useState();
   const [status, setStatus] = useState('idle');
   const [camId, setCamId] = useState();
+  const [predicCamId, setPredicCamId] = useState();
 
   useEffect(() => {
     getCameras();
@@ -49,7 +45,7 @@ const Camera = ({ navigation }) => {
       var streamUrls = [];
       var camera = {};
       list = response.data;
-      console.log("list of response ", list);
+      // console.log("list of response ", list);
       for (let i = 0; i < list.length; i++) {
         streamUrls = [];
         streamUrls.push(JSON.parse(list[i]['streamUrls']));
@@ -72,7 +68,7 @@ const Camera = ({ navigation }) => {
       }
       setCameraData(cameras);
       var list1 = cameras;
-      console.log('...............', list1);
+      // console.log('...............', list1);
       setStatus('success')
     }
 
@@ -85,15 +81,21 @@ const Camera = ({ navigation }) => {
   if (status === 'loading') {
     return <Spinner />
   }
-
+  console.log("cameraData..........", cameraData);
   async function selectId(item) {
-    setCamId(item.camId);
-    await AsyncStorage.setItem('CamId', item.camId);
+    let Camid = item.camId;
+    setCamId(Camid);
+    await AsyncStorage.setItem('camId', camId);
+    console.log('camId....', camId);
     navigation.navigate('CameraActivities');
   }
-  console.log('....camid....', camId);
-  console.log("cameraData..........", cameraData);
-
+  async function selectIdPrediction(item) {
+    let cameraId = item.camId;
+    setPredicCamId(cameraId);
+    await AsyncStorage.setItem('predicCamId', predicCamId);
+    console.log('predicCamId....', predicCamId);
+    navigation.navigate('CameraPrediction');
+  }
   async function DeleteCamera(item) {
 
     try {
@@ -117,8 +119,6 @@ const Camera = ({ navigation }) => {
     }
 
   }
-
-
   return (
     <SafeAreaView>
 
@@ -163,10 +163,13 @@ const Camera = ({ navigation }) => {
                     </View>
                     <View style={{ flexDirection: 'row', width: '50%', }}>
                       <View style={{ marginLeft: 10, }}>
-                        <TouchableOpacity>
-                          <AntDesign
-                            name="playcircleo"
-                            size={16}
+                        <TouchableOpacity
+                          onPress={() => selectIdPrediction(item)}
+                        // onPress={() => navigation.replace("CameraPrediction")}
+                        >
+                          <SimpleLineIcons
+                            name="event"
+                            size={18}
                             color={'#ff8c00'}
                             // marginLeft={10}
                             paddingLeft={10}
@@ -174,7 +177,7 @@ const Camera = ({ navigation }) => {
                           />
                         </TouchableOpacity>
                       </View>
-                      <View style={{ marginLeft: 1, }}>
+                      {/* <View style={{ marginLeft: 1, }}>
                         <TouchableOpacity>
                           <AntDesign
                             name="pausecircleo"
@@ -185,7 +188,7 @@ const Camera = ({ navigation }) => {
 
                           />
                         </TouchableOpacity>
-                      </View>
+                      </View> */}
                       <View style={{ marginLeft: 1, }}>
                         <TouchableOpacity
                           onPress={() => selectId(item)}
@@ -194,10 +197,10 @@ const Camera = ({ navigation }) => {
 
                           <AntDesign
                             name="edit"
-                            size={16}
+                            size={18}
                             color={'#ff8c00'}
                             // marginLeft={15}
-                            paddingLeft={10}
+                            paddingLeft={15}
 
                           />
                         </TouchableOpacity>
@@ -206,10 +209,10 @@ const Camera = ({ navigation }) => {
                         <TouchableOpacity onPress={() => DeleteCamera(item)}>
                           <AntDesign
                             name="delete"
-                            size={16}
+                            size={18}
                             color={'#ff8c00'}
                             // marginLeft={20}
-                            paddingLeft={10}
+                            paddingLeft={15}
 
                           />
                         </TouchableOpacity>

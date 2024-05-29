@@ -30,13 +30,13 @@ const AddCameraActivityFeature = ({ navigation }) => {
   const axiosContext = useContext(AxiosContext);
   const authContext = useContext(AuthContext);
   const [activites, setActivites] = useState([]);
-  const [videoURLmp4, setVideoURLmp4] = useState();
+  const [videoURLmp4, setVideoURLmp4] = useState('idle');
   const [subTextTab, setSubTextTab] = useState(0);
   const [activityFeature, setActivityFeature] = useState([]);
   const [camId, setCamId] = useState();
   const { authAxios } = useContext(AxiosContext);
   const [status, setStatus] = useState('idle');
-
+  const [isChecked, setIsChecked] = useState();
   useEffect(() => {
 
     ApiFeature();
@@ -61,7 +61,8 @@ const AddCameraActivityFeature = ({ navigation }) => {
     }
 
     let cam_Id = await AsyncStorage.getItem('cam_Id');
-
+    let checked = await AsyncStorage.getItem('checked');
+    setIsChecked(checked)
     setCamId(cam_Id);
     console.log('cam_Id.....', cam_Id);
 
@@ -106,19 +107,21 @@ const AddCameraActivityFeature = ({ navigation }) => {
   function showData(key) {
     setSubTextTab(key);
   }
+  console.log("isChecked", isChecked)
 
   async function PostCamera() {
     setStatus('loading');
 
     var data = activityFeature;
-    var type = 'rtsp';
+    var type = isChecked;
     var SourceVideo = 'video';
     var CamId = camId;
+    var condition = null;
     console.log('.........parameter', data);
 
     try {
       const response = await axiosContext.authAxios.post(
-        `/Cameras/addcamera/${type}/${SourceVideo}/${CamId}`,
+        `/Cameras/addcamera/${type}/${SourceVideo}/${CamId}/${condition}`,
 
         data,
       );

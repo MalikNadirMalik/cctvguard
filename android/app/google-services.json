@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "384282578730",
+    "project_id": "cctv-guard-81f9f",
+    "storage_bucket": "cctv-guard-81f9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384282578730:android:3fa5b55e1160dba3979853",
+        "android_client_info": {
+          "package_name": "com.cctv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1kamiapiTUpwazljSlbHW1zb2fgsCzRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

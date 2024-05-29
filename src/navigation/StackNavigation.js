@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { Linking, ActivityIndicator } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Splash from '../screen/Splash';
 import Login from '../screen/Login';
@@ -19,21 +20,19 @@ import Pricing from '../screen/DrawBar/Pricing';
 import CustomDrawer from './CustomDrawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { createDrawerNavigator, } from '@react-navigation/drawer';
-import CameraActivities from '../screen/DrawBar/CameraActivities'
-// import { AuthContext } from '../context/AuthContext';
-// import { AxiosContext } from '../context/AxiosContext';
-// import { AuthInterceptor } from '../screen/AuthInterceptor';
-
-
-
-// Screens are calling through Stack Navigation
+import CameraActivities from '../screen/DrawBar/CameraActivities';
+import CameraPrediction from '../screen/DrawBar/CameraPrediction';
+import WatchPrediction from '../screen/DrawBar/WatchPrediction';
+import PushNotification from '../utils/PushNotification';
+import NotificationHandler from '../utils/NotificationHandler';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function DrawerRoutes() {
   return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawer{...props} />} initialRouteName="Dashboard" >
+    <Drawer.Navigator drawerContent={props => <CustomDrawer{...props} />} >
       <Drawer.Screen name="Dashboard" component={Dashboard} options={{
         drawerIcon: ({ color }) => {
           <MaterialIcons name='dashboard' color={color} size={22} />
@@ -49,7 +48,7 @@ function DrawerRoutes() {
       <Drawer.Screen name='MAPS' component={MAPS} options={{ headerShown: true }} />
       <Drawer.Screen name='Pricing' component={Pricing} options={{ headerShown: true }} />
       <Drawer.Screen name='CameraActivities' component={CameraActivities} options={{ headerShown: true, }} />
-      {/* <Drawer.Screen name='AuthInterceptor' component={AuthInterceptor} options={{ headerShown: false }} /> */}
+
 
     </Drawer.Navigator>
   )
@@ -64,25 +63,16 @@ const StackNavigation = () => {
       <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
       <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
       <Stack.Screen name='Home' component={DrawerRoutes} options={{ headerShown: false }} />
-      {/* <Stack.Screen name ="AuthContext" component={AuthContext} options={{headerShown:false}}/>
-      <Stack.Screen name ="AxioxContext" component={AxiosContext} options={{headerShown:false}}/> */}
+      <Stack.Screen name="CameraPrediction" component={CameraPrediction} options={{ headerShown: false }} />
+      <Stack.Screen name="WatchPrediction" component={WatchPrediction} options={{ headerShown: false }} />
+      <Stack.Screen name="NotificationHandler" component={NotificationHandler} options={{ headerShown: false }} />
+      <Stack.Screen name="PushNotification" component={PushNotification} options={{ headerShown: false }} />
+
     </Stack.Navigator>
 
   )
 
 }
-// const MainStackNavigator = () => {
-//   return (
-//     <Stack.Navigator screenOptions={screenOptionStyle}>
-//       <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>
-//       <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
-//       <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
-//       <Stack.Screen name="Home" component={Home} options={{headerShown: true}}/>
-//     </Stack.Navigator>
-//   );
-
-// };
-
 const screenOptionStyle = {
   headerStyle: {
     backgroundColor: "#9AC4F8",

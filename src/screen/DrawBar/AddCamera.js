@@ -24,7 +24,6 @@ import { AuthContext } from '../../context/AuthContext';
 import { AxiosContext } from '../../context/AxiosContext';
 
 
-
 let cam_Id;
 let videoURL;
 
@@ -38,6 +37,7 @@ const AddCamera = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const { publicAxios } = useContext(AxiosContext);
   const axiosContext = useContext(AxiosContext);
+  const [checked, setChecked] = useState('rtsp');
 
 
 
@@ -73,15 +73,14 @@ const AddCamera = ({ navigation }) => {
     }
 
     setStatus('success');
-
-    // console.log('camId....', camId);
-
-    // console.log('videoURLmp4....', videoURLmp4);
+    await AsyncStorage.setItem('checked', checked);
+    console.log("checked", checked);
   };
 
   if (status === 'loading') {
     return <Spinner />;
   }
+
 
   return (
     <SafeAreaView >
@@ -130,6 +129,30 @@ const AddCamera = ({ navigation }) => {
               </TouchableOpacity>
             </View>
 
+          </View>
+          <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 10, }}>
+            <View style={{ flexDirection: 'row' }}>
+              <RadioButton
+                value="rtsp"
+                status={checked === 'rtsp' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('rtsp')}
+                color="#ff8c00"
+                uncheckedColor="white"
+              />
+              <Text style={{ color: '#ff8c00', fontSize: 22, marginLeft: 5 }}>rtsp</Text>
+            </View>
+            <View style={{ flexDirection: 'row', color: 'white', marginLeft: 10, }}>
+              <RadioButton
+
+                value="event"
+                status={checked === 'event' ? 'checked' : 'unchecked'}
+                buttonColor={'#ff8c00'}
+                onPress={() => setChecked('event')}
+                color="#ff8c00"
+                uncheckedColor="white"
+              />
+              <Text style={{ color: '#ff8c00', fontSize: 22, marginLeft: 5 }}>event</Text>
+            </View>
           </View>
 
           <Video style={styles.Video}

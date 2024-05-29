@@ -16,14 +16,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { AuthContext } from '../../context/AuthContext';
-import { AxiosContext } from '../../context/AxiosContext';
+// import { AuthContext } from '../../context/AuthContext';
+// import { AxiosContext } from '../../context/AxiosContext';
 import { navigation } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {
 
-  const authContext = useContext(AuthContext);
-  const axiosContext = useContext(AxiosContext);
+  // const authContext = useContext(AuthContext);
+  // const axiosContext = useContext(AxiosContext);
 
   // console.log('navigationHome', navigation)
 

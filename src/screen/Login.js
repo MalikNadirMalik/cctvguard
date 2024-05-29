@@ -1,4 +1,4 @@
-import React, { useContext, useState, Ref } from 'react';
+import React, { useContext, useState, Ref, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,28 +11,53 @@ import {
     Image,
     TouchableOpacity,
 } from 'react-native';
+import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import * as Keychain from 'react-native-keychain';
 import { AxiosContext } from '../context/AxiosContext';
 import Spinner from '../../src/components/Spinner';
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Entypo from 'react-native-vector-icons/Entypo';
+import { WebView } from 'react-native-webview';
+import DeviceInfo from 'react-native-device-info';
 
 
 
 const Login = () => {
 
-    const [userName, setUserName] = useState('NadirMalik');
+    // const [userName, setUserName] = useState('NadirMalik');
+    const [userName, setUserName] = useState('Aliwwtj');
     const [status, setStatus] = useState('idle');
-    const [password, setPassword] = useState('Malik@0987');
+    // const [password, setPassword] = useState('Malik@0987');
+    const [password, setPassword] = useState('Asdzxc@123');
     const authContext = useContext(AuthContext);
     const { publicAxios } = useContext(AxiosContext);
+    const [deviceId, setDeviceId] = useState();
     const navigation = useNavigation();
 
-    console.log('LoginNavigation', navigation)
+    useEffect(() => {
+        getdeviceId();
+    });
+
+    const getdeviceId = async () => {
+        let DeviceUniqueId = DeviceInfo.getUniqueId();
+        setDeviceId(DeviceUniqueId._j);
+        // let deviceId = DeviceUniqueId._j;
+        console.log('uniqueId of the device', deviceId);
+        await AsyncStorage.setItem('deviceId', deviceId);
+    };
 
     const onLogin = async () => {
+
+
+
+        let fcmToken = await AsyncStorage.getItem('fcmToken');
+        console.log('DeviceToken', fcmToken);
         setStatus('loading');
+
         try {
+
             const response = await publicAxios.post('/Authentication/login', {
                 "id": "string",
                 "normalizedUserName": "string",
@@ -51,11 +76,15 @@ const Login = () => {
                 "userName": userName,
                 "email": "string",
                 "password": password,
+
             });
+            const { token, refreshToken, id } = response.data;
+            console.log("login data", response.data);
+            // console.log('userId', id);
 
 
-            const { token, refreshToken } = response.data;
-            console.log(response.data);
+
+            await AsyncStorage.setItem('id', id);
             authContext.setAuthState({
                 token,
                 refreshToken,
@@ -64,6 +93,8 @@ const Login = () => {
             if (status === 'loading') {
                 return <Spinner />
             }
+
+
             await Keychain.setGenericPassword(
                 'token',
                 JSON.stringify({
@@ -72,17 +103,23 @@ const Login = () => {
                 }),
             );
 
-            // setStatus('success');
-        } catch (error) {
+            const result = await axios.post('https://api.cctvguard.ai/api/Authentication/update-device', {
+                "userId": id,
+                "status": true,
+                "deviceToken": fcmToken,
+                "deviceId": deviceId,
+            });
+            // console.log("result", result);
+            setStatus('success');
+        }
+
+        catch (error) {
             setStatus('error')
             Alert.alert('Login Failed', error.response.data.message);
 
         }
     };
-    // const onSignup = async () => {
-    //     navigation.navigate('Signup');
-    //     console.log('goto')
-    // }
+
     return (
         <View style={StyleSheet.container}>
             <ImageBackground source={require('../Assets/background.png')} style={styles.ImageBackground}>
@@ -125,10 +162,25 @@ const Login = () => {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.loginbtn} onPress={() => onLogin()}>
-                            <Text>
+                            <Text style={{ color: 'white' }}>
                                 LOGIN
                             </Text>
 
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.loginbtn}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Entypo
+                                    name="key"
+                                    size={16}
+                                    color={'white'}
+                                // marginLeft={10}
+                                // paddingLeft={10}
+
+                                />
+                                <Text style={{ color: 'white', marginLeft: 10, }}>
+                                    Sign in with SSO
+                                </Text>
+                            </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
 
@@ -187,7 +239,7 @@ const styles = StyleSheet.create({
     },
 
     loginbtn: {
-        width: "90%",
+        width: "100%",
         borderRadius: 10,
         height: 50,
         alignItems: "center",
@@ -195,10 +247,12 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 40,
         backgroundColor: "#FF8c00",
+
     },
     text: {
         color: 'white',
         marginTop: 30,
+        marginLeft: 20,
     }
 })
 export default Login;

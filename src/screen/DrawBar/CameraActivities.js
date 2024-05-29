@@ -45,11 +45,11 @@ const CameraActivities = ({ navigation }) => {
 
   async function getCameras() {
     setStatus('loading');
-    let CamId = await AsyncStorage.getItem('CamId');
+    let CamId = await AsyncStorage.getItem('camId');
     setCamId(CamId);
-    console.log("camId....", camId);
+    console.log("camId....", CamId);
     try {
-      const response = await axiosContext.authAxios.get(`/Cameras/getcameraactivity/${camId}`,);
+      const response = await axiosContext.authAxios.get(`/Cameras/getcameraactivity/${CamId}`,);
       console.log('this is response', response.data);
       var list = [];
       var cameras = [];
