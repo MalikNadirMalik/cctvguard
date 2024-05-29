@@ -130,7 +130,6 @@ const Camera = ({ navigation }) => {
 
 
           <FlatList
-            // style={{ flexDirection: 'row', marginTop: 20, }}
             data={cameraData}
             renderItem={({ item }) =>
               <View style={{ flexDirection: 'column', marginTop: 20, }}>
@@ -138,16 +137,6 @@ const Camera = ({ navigation }) => {
                   source={{ uri: item.streamUrl }}
                   style={{ width: 200, height: 200, padding: 20, alignSelf: 'center', }}
                   resizeMode={'contain'}
-                // selectedVideoTrack={{
-                //   type: "resolution",
-                //   value: 480
-                // }}
-                // source={item.streamUrl}
-                // ref={(ref) => {
-                //   this.player = ref
-                // }}
-                // onBuffer={this.onBuffer}
-                // onError={this.videoError}
                 />
 
                 < View style={{ flexDirection: 'column', }
@@ -177,22 +166,9 @@ const Camera = ({ navigation }) => {
                           />
                         </TouchableOpacity>
                       </View>
-                      {/* <View style={{ marginLeft: 1, }}>
-                        <TouchableOpacity>
-                          <AntDesign
-                            name="pausecircleo"
-                            size={16}
-                            color={'#ff8c00'}
-                            // marginLeft={10}
-                            paddingLeft={10}
-
-                          />
-                        </TouchableOpacity>
-                      </View> */}
                       <View style={{ marginLeft: 1, }}>
                         <TouchableOpacity
                           onPress={() => selectId(item)}
-                        // onPress={() => navigation.navigate('CameraActivities', { camId: item.camId })}
                         >
 
                           <AntDesign

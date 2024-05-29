@@ -54,7 +54,7 @@ const AxiosProvider = ({ children }) => {
                 authContext.setAuthState({
                     ...authContext.authState,
                     token: tokenRefreshResponse.data.token,
-                    refreshToken: tokenRefreshResponse.data.refreshToken,   // 
+                    refreshToken: tokenRefreshResponse.data.refreshToken,
 
                 });
 
@@ -73,9 +73,6 @@ const AxiosProvider = ({ children }) => {
                 console.log('error', e);
 
                 authContext.setAuthState({
-                    // accessToken: null,
-                    // token: null,
-                    // refreshToken: null,
                     token: null,
                     refreshToken: null,
                     authenticated: false,

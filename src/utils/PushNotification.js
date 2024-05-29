@@ -48,51 +48,9 @@ const getFcmToken = async () => {
     }
 };
 
-// export async function NotificationServices() {
-//     const navigation = useNavigation();
-//     //onNotificationOpenedApp: When the application is running, but in the background.
-//     messaging().onNotificationOpenedApp(remoteMessage => {
-//         console.log("navigation1", navigation);
-//         console.log('Notifivation caused app open from background state in the Notification component ',
-//             remoteMessage)
-//         console.log("navigation1", navigation);
-//         // navigation.navigate('WatchPrediction');
-
-//     });
-//     //forGround Message
-//     messaging().onMessage(async remoteMessage => {
-//         console.log("navigation2", navigation);
-
-//         console.log('Notification caused app open from foreground state in the Notification component',
-//             remoteMessage);
-//         // const { CameraPrediction } = remoteMessage.data;
-//         // navigation.navigate('WatchPrediction');
-//         // navigationRef.current?.navigate(CameraPrediction);
-
-//     });
-
-//     //getInitialNotification: When the application is opened from a quit state.
-//     messaging().
-//         getInitialNotification()
-//         .then(remoteMessage => {
-//             console.log("navigation3", navigation);
-//             if (remoteMessage) {
-//                 console.log("Notifivation caused app open from quit state in the Notification component",
-//                     remoteMessage);
-//             }
-
-//             // navigation.navigate('WatchPrediction');
-//         });
-
-//     messaging().setBackgroundMessageHandler(async remoteMessage => {
-//         console.log('Message handled in the background in the PushNotification page!', remoteMessage);
-//     });
-// }
-
 const PushNotification = ({ navigation }) => {
-    
+
     const navigationContainerRef = useRef();
-    // const navigation = useNavigation();
     console.log("navigation....", navigationContainerRef);
 
     return (
@@ -104,12 +62,6 @@ const PushNotification = ({ navigation }) => {
                     <Text style={{ fontSize: 24 }}>
                         hello Notification
                     </Text>
-
-
-
-
-
-
                 </ImageBackground >
 
             </View >

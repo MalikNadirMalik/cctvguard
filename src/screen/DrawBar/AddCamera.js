@@ -38,10 +38,7 @@ const AddCamera = ({ navigation }) => {
   const { publicAxios } = useContext(AxiosContext);
   const axiosContext = useContext(AxiosContext);
   const [checked, setChecked] = useState('rtsp');
-
-
-
-  // const PreviewButtion = async () => {
+  
   async function PreviewButtion() {
 
     setStatus('loading');
